@@ -18,9 +18,11 @@ Run the db/init.sql on the database
 
 <li>
 Edit config.php in the src folder accordingly. 
+	```
 	$host = "localhost";
 	$dbname = "dbname";
 	$username = "username";
 	$password = "password";
+	```
 </li>
 </ol>
