@@ -1,4 +1,5 @@
 <?php
+session_start();
 require 'config.php';
 
 $token = $_GET['token'] ?? null;
@@ -7,7 +8,7 @@ if (!$token) {
     die("Invalid access token.");
 }
 
-$myEncounter = True;//TODO must be debugged
+$myEncounter = False;
 if (isset($_SESSION['user_id'])) {
     $user_id = $_SESSION['user_id'];
 	try {
@@ -17,10 +18,8 @@ if (isset($_SESSION['user_id'])) {
 		if($user_id == $encounter["user_id"]){
 			$myEncounter=True;
 		}
-		echo $encounter["user_id"]."___".$user_id;
 	} catch (PDOException $e) {
-		echo "Error";
-		//Do nothing just act like it is not ours
+		//Do nothing just do not show the add panel
 	}
 }
 
@@ -253,6 +252,7 @@ if (isset($_SESSION['user_id'])) {
 		window.onload = function() {
 			loadEncounter();
 			loadGroupsForSelect();
+			setInterval(loadEncounter, 1000);
 		};
     </script>
 </body>
