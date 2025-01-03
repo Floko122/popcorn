@@ -219,7 +219,6 @@ $user_id = $_SESSION['user_id'];
 				encountersTable.appendChild(row);
 			});
 		}
-
 		async function openEncounter(encounterId, accessToken) {
 			const response = await fetch('open_encounter.php', {
 				method: 'POST',
@@ -227,13 +226,26 @@ $user_id = $_SESSION['user_id'];
 				body: `encounter_id=${encounterId}`
 			});
 			if (response.ok) {
-				alert(`Encounter opened! Share this URL: ${window.location.origin}/encounter_page.php?token=${accessToken}`);
+				alert(`Encounter opened! Share this URL: ${getParentPath()}/encounter_page.php?token=${accessToken}`);
 				loadEncounters();
 			} else {
 				console.error('Failed to open encounter.');
 			}
 		}
+		function getParentPath() {
+			var currentPath = window.location.pathname; // Get the current URL path
+			var pathParts = currentPath.split('/'); // Split the path into parts based on '/'
 
+			// Remove the last part (the file name)
+			pathParts.pop(); 
+
+			// Join the remaining parts back together to form the parent path
+			var parentPath = pathParts.join('/');
+
+			// Return the full URL
+			return window.location.origin + parentPath;
+		}
+	    
 		async function closeEncounter(encounterId) {
 			const response = await fetch('close_encounter.php', {
 				method: 'POST',
